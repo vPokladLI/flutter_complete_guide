@@ -1,27 +1,41 @@
 import 'package:flutter/material.dart';
 
+import './question.dart';
+
+import './answer.dart';
+
 void main() => runApp(MyApp());
 
 class MyApp extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    return MyAppState();
+    return _MyAppState();
   }
 }
 
-class MyAppState extends State<MyApp> {
-  var questions = [
-    'Wat\'s your favorite color?',
-    'Wat\'s your favorite animal?',
-    'Wat\'s your favorite band?'
+class _MyAppState extends State<MyApp> {
+  static const _questions = [
+    {
+      'question': 'Wat\'s your favorite color?',
+      'answers': ['red', 'blue', 'green', 'yellow']
+    },
+    {
+      'question': 'Wat\'s your favorite animal?',
+      'answers': ['cat', 'dog', 'horse', 'spider']
+    },
+    {
+      'question': 'Wat\'s your favorite band?',
+      'answers': ['Mettalica', 'Back street boys', 'RHCP', 'SOD']
+    }
   ];
-  var questionIndex = 0;
+
+  var _questionIndex = 0;
   void _onPress() {
     setState(() {
-      if (questions.length - 1 > questionIndex) {
-        questionIndex += 1;
+      if (_questions.length - 1 > _questionIndex) {
+        _questionIndex += 1;
       } else {
-        questionIndex = 0;
+        _questionIndex = 0;
       }
     });
   }
@@ -30,19 +44,16 @@ class MyAppState extends State<MyApp> {
   Widget build(BuildContext ctx) {
     return MaterialApp(
       home: Scaffold(
-          appBar: AppBar(
-            title: Text('Flutter App'),
-          ),
-          body: Column(children: [
-            Text(questions[questionIndex]),
-            ElevatedButton(onPressed: _onPress, child: Text('button')),
-            ElevatedButton(onPressed: _onPress, child: Text('Button')),
-            ElevatedButton(onPressed: _onPress, child: Text('Button')),
-            ElevatedButton(
-                onPressed: _onPress,
-                onLongPress: () => print('LongPress'),
-                child: Text('Button'))
-          ])),
+        appBar: AppBar(
+          title: Text('Flutter App'),
+        ),
+        body: Column(children: [
+          Question(_questions[_questionIndex]['question']),
+          ...(_questions[_questionIndex]['answers'] as List)
+              .map((text) => Answer(_onPress, text))
+              .toList()
+        ]),
+      ),
     );
   }
 }
