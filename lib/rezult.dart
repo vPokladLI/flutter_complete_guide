@@ -8,11 +8,15 @@ class Rezult extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: Column(children: [
+      child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
         Text('You finished!, Your score is ${score}'),
-        FloatingActionButton(
-          child: Icon(Icons.restart_alt),
-          onPressed: restart,
+        Container(
+          margin: EdgeInsets.only(top: 20),
+          child: FloatingActionButton(
+            tooltip: 'Restart',
+            child: Icon(Icons.restart_alt),
+            onPressed: restart,
+          ),
         )
       ]),
     );

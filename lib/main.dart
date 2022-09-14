@@ -44,17 +44,17 @@ class _MyAppState extends State<MyApp> {
   ];
 
   var _questionIndex = 0;
-  int _score = 0;
-  void _answerHandler(score) {
+  int _totalScore = 0;
+  void _answerHandler(int score) {
+    _totalScore += score;
     setState(() {
-      _score = _score + score as int;
       _questionIndex += 1;
     });
   }
 
   void _restart() {
+    _totalScore = 0;
     setState(() {
-      _score = 0;
       _questionIndex = 0;
     });
   }
@@ -72,7 +72,7 @@ class _MyAppState extends State<MyApp> {
                 questions: _questions,
                 questionIndex: _questionIndex,
                 answerHandler: _answerHandler)
-            : Rezult(restart: _restart, score: _score),
+            : Rezult(restart: _restart, score: _totalScore),
       ),
     );
   }
